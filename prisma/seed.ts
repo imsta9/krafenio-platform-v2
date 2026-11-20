@@ -1,0 +1,5 @@
+import {PrismaClient,Role} from "@prisma/client";
+import {hash} from "bcryptjs";
+const db=new PrismaClient();
+async function main(){const password=process.env.SEED_ADMIN_PASSWORD;if(!password||password.length<12)throw new Error("Set SEED_ADMIN_PASSWORD to at least 12 characters.");const email=(process.env.SEED_ADMIN_EMAIL||"admin@krafenio.local").toLowerCase();const user=await db.user.upsert({where:{email},update:{name:process.env.SEED_ADMIN_NAME||"KRAFENIO Administrator",passwordHash:await hash(password,12)},create:{name:process.env.SEED_ADMIN_NAME||"KRAFENIO Administrator",email,passwordHash:await hash(password,12),roles:{create:[{role:Role.SUPER_ADMIN},{role:Role.ADMIN}]}}});await db.userRole.upsert({where:{userId_role:{userId:user.id,role:Role.SUPER_ADMIN}},update:{},create:{userId:user.id,role:Role.SUPER_ADMIN}});for(const name of ["Engineering","Product","People & Culture","Operations"])await db.department.upsert({where:{name},update:{},create:{name}});console.log("Seeded administrator",email)}
+main().finally(()=>db.$disconnect());

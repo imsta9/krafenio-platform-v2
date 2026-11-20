@@ -1,0 +1,2 @@
+import {ContentPage} from "@/components/content-page";
+export default function Careers(){return <ContentPage eyebrow="CAREERS" title="Build meaningful software with us." description="Bring your perspective, curiosity, and craft to a globally connected engineering community." items={[{title:"Engineering culture",text:"Collaborate across disciplines and geographies."},{title:"Remote-first mindset",text:"Work with clear goals, ownership, and communication."},{title:"Continuous learning",text:"Grow your craft through purposeful work."}]}/>}

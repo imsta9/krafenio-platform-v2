@@ -1,0 +1,2 @@
+import Link from "next/link";
+export function SiteHeader(){return <header className="site-header"><div className="container header-inner"><Link href="/" className="brand">KRAFENIO<span>.</span></Link><nav className="nav"><Link href="/about">About</Link><Link href="/services">Services</Link><Link href="/industries">Industries</Link><Link href="/careers">Careers</Link><Link href="/contact">Contact</Link></nav><Link className="btn" href="/contact">Start a project</Link></div></header>}

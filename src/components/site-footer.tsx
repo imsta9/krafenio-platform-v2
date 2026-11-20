@@ -1,0 +1,2 @@
+import Link from "next/link";
+export function SiteFooter(){return <footer className="footer"><div className="container"><strong style={{color:"white",letterSpacing:".12em"}}>KRAFENIO</strong><p>Passion in Every Line of Code.</p><p>© {new Date().getFullYear()} KRAFENIO. All rights reserved.</p><div style={{display:"flex",gap:18}}><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><Link href="/contact">Contact</Link></div></div></footer>}

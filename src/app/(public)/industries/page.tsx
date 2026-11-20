@@ -1,0 +1,2 @@
+import {ContentPage} from "@/components/content-page";
+export default function Industries(){return <ContentPage eyebrow="INDUSTRIES" title="Technology for complex environments." description="Engineering for dependable platforms, secure integrations, and useful digital experiences." items={["Financial services","Healthcare","Telecommunications","Enterprise technology","E-commerce","Digital platforms"].map(title=>({title,text:"Solutions shaped around domain context and operational needs."}))}/>}
