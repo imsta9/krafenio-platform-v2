@@ -1,0 +1,54 @@
+
+name: KRAFENIO CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-and-build:
+    name: Validate and Build
+    runs-on: ubuntu-latest
+
+    env:
+      DATABASE_URL: postgresql://ci:ci@127.0.0.1:5432/krafenio_ci?schema=public
+      AUTH_SECRET: ci-only-placeholder-secret-do-not-use-in-production
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '26.13.1'
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: '10.14.0'
+          cache: true
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate Prisma schema
+        run: pnpm exec prisma validate
+
+      - name: Generate Prisma Client
+        run: pnpm exec prisma generate
+
+      - name: TypeScript validation
+        run: pnpm typecheck
+
+      - name: ESLint validation
+        run: pnpm lint
+
+      - name: Production build
+        run: pnpm build
